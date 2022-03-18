@@ -1,0 +1,27 @@
+version: '3'
+services:
+  application:
+    image: 'demo-app:latest'
+    build:
+      context: .
+    container_name: demo-app
+    depends_on:
+      - postgre
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgre:5432/demodb
+      - SPRING_DATASOURCE_USERNAME=othman
+      - SPRING_DATASOURCE_PASSWORD=othman
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    ports:
+      - "8081:8081"
+
+  postgre:
+    image: 'postgres:10.15'
+    container_name: postgre
+    environment:
+      - POSTGRES_DB=demodb
+      - POSTGRES_USER=othman
+      - POSTGRES_PASSWORD=othman
+    ports:
+      - "5433:5432"
+
